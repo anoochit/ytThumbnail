@@ -53,7 +53,7 @@ class TitleListView extends GetView<HomeController> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      child: Text('${index + 1}'),
+                      child: FittedBox(child: Text('${index + 1}')),
                     ),
                     title: Text(
                       controller.listTitle[index],
