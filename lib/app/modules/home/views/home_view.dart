@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:ythumbnail/app/modules/home/views/base_canvas_view.dart';
-import 'package:ythumbnail/app/modules/home/views/title_list_view.dart';
 
 import '../controllers/home_controller.dart';
+import 'base_canvas_view.dart';
+import 'title_list_view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -13,6 +13,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('ytThumbnail'),
+        surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Flex(
