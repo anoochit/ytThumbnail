@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: 4.6.6
+  icons_launcher: ^2.1.7
   image: ^4.1.7
   image_picker: ^1.0.7
   path_provider: ^2.1.2
@@ -25,7 +26,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-
 msix_config:
   display_name: ytThumbnail
-  msix_version: 1.0.0.0 
+  msix_version: 1.0.0.0

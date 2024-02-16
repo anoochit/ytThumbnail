@@ -169,6 +169,15 @@ class TitleListView extends GetView<HomeController> {
         log('Error : $e');
       }
     }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.green,
+        content: Text(
+          'Export images to ${appDocumentsDir.path}',
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    );
     Get.back();
   }
 }

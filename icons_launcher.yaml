@@ -1,0 +1,6 @@
+icons_launcher:
+  image_path: "assets/yt.png"
+  platforms:
+    windows:
+      enable: true
+   
