@@ -8,16 +8,19 @@ class HomeController extends GetxController {
 
   Uint8List? baseImage;
 
+  RxString baseTitle = ''.obs;
+
+  String sampleTitle =
+      'Aliquip do nostrud anim voluptate dolor culpa reprehenderit veniam ad minim nulla ut anim adipisicing.';
+
   // image
 
   @override
   void onInit() {
     listTitle.add(
-      'Est consequat ut irure minim dolore excepteur duis officia est qui ullamco.',
-    );
-    listTitle.add(
-      'Reprehenderit reprehenderit proident commodo ut ex ullamco.',
-    );
+        'Est consequat ut irure minim dolore excepteur duis officia est qui ullamco.');
+    listTitle
+        .add('Reprehenderit reprehenderit proident commodo ut ex ullamco.');
     super.onInit();
   }
 }

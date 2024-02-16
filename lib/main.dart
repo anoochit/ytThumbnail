@@ -19,9 +19,11 @@ void main() {
   );
 
   doWhenWindowReady(() {
-    const initialSize = Size(1280, 720);
+    const initialSize = Size(1920 - 480, 1080 - 256);
     appWindow.size = initialSize;
+    appWindow.minSize = initialSize;
     appWindow.alignment = Alignment.center;
     appWindow.show();
+    appWindow.maximize();
   });
 }

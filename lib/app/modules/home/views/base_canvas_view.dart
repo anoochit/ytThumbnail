@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:ythumbnail/app/modules/home/controllers/home_controller.dart';
+
+ScreenshotController screenshotController =
+    screenshotController = ScreenshotController();
 
 class BaseCanvasView extends GetView<HomeController> {
   const BaseCanvasView({Key? key}) : super(key: key);
@@ -24,11 +28,16 @@ class BaseCanvasView extends GetView<HomeController> {
                     await picker.pickImage(source: ImageSource.gallery);
                 if (xfile != null) {
                   controller.baseImage = await xfile.readAsBytes();
+
+                  if (controller.baseTitle.isEmpty) {
+                    controller.baseTitle.value = controller.sampleTitle;
+                  }
+
                   controller.update(['canvas']);
                 }
               },
-              label: Text('Add base image'),
-              icon: Icon(Icons.add_circle),
+              label: const Text('Add base image'),
+              icon: const Icon(Icons.add_circle),
             ),
           ),
           // base image
@@ -39,9 +48,33 @@ class BaseCanvasView extends GetView<HomeController> {
                 init: HomeController(),
                 builder: (controller) {
                   return (controller.baseImage != null)
-                      ? Image.memory(
-                          controller.baseImage!,
-                        )
+                      ? LayoutBuilder(builder: (context, constraints) {
+                          return Screenshot(
+                            controller: screenshotController,
+                            child: Stack(
+                              children: [
+                                Image.memory(
+                                  controller.baseImage!,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                                Positioned(
+                                  top: 120,
+                                  left: 72,
+                                  child: SizedBox(
+                                    width: constraints.maxWidth - 132 - 32,
+                                    child: Text(
+                                      controller.baseTitle.value,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        })
                       : Container();
                 },
               ),
