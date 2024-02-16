@@ -52,8 +52,21 @@ class TitleListView extends GetView<HomeController> {
                 itemCount: controller.listTitle.length,
                 itemBuilder: (context, index) {
                   return ListTile(
+                    leading: CircleAvatar(
+                      child: Text('${index + 1}'),
+                    ),
                     title: Text(
                       controller.listTitle[index],
+                    ),
+                    onTap: () {
+                      controller.baseTitle.value = controller.listTitle[index];
+                      controller.update(['canvas']);
+                    },
+                    trailing: IconButton(
+                      onPressed: () {
+                        controller.listTitle.removeAt(index);
+                      },
+                      icon: const Icon(Icons.delete),
                     ),
                   );
                 },
@@ -86,10 +99,12 @@ class TitleListView extends GetView<HomeController> {
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator.adaptive(),
+                // CircularProgressIndicator.adaptive(),
+                Icon(Icons.schedule),
                 SizedBox(width: 16.0),
+
                 Text('Generating...'),
-                Spacer(),
+                // Spacer(),
                 // IconButton(
                 //   onPressed: () => Get.back(),
                 //   icon: const Icon(Icons.close),
@@ -102,7 +117,7 @@ class TitleListView extends GetView<HomeController> {
       );
 
       // generate image
-      await generateImage(context);
+      generateImage(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -132,19 +147,17 @@ class TitleListView extends GetView<HomeController> {
       final fileName = 'export_$index.png';
       log('filename = $fileName');
 
-      await Future.delayed(const Duration(milliseconds: 500));
-
       log('screenshotController is blank = ${screenshotController.isBlank}');
 
       try {
         Uint8List? result = await screenshotController.capture(
-          delay: const Duration(milliseconds: 500),
+          delay: const Duration(milliseconds: 50),
         );
 
         // final result = await screenshotController.captureAndSave(
         //   appDocumentsDir.path,
         //   fileName: 'export_$index.png',
-        //   delay: const Duration(milliseconds: 500),
+        //   delay: const Duration(milliseconds: 100),
         // );
 
         // resize

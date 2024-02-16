@@ -58,7 +58,7 @@ class BaseCanvasView extends GetView<HomeController> {
                                   fit: BoxFit.fitWidth,
                                 ),
                                 Positioned(
-                                  top: 120,
+                                  top: 120 + 32,
                                   left: 72,
                                   child: SizedBox(
                                     width: constraints.maxWidth - 132 - 32,
