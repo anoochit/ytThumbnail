@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ythumbnail/app/modules/home/controllers/home_controller.dart';
 import 'package:ythumbnail/app/modules/home/views/base_canvas_view.dart';
+
+import '../../../utils/image_util.dart';
 
 class TitleListView extends GetView<HomeController> {
   TitleListView({Key? key}) : super(key: key);
@@ -125,20 +128,29 @@ class TitleListView extends GetView<HomeController> {
       // update ui
       controller.baseTitle.value = controller.listTitle[index];
       controller.update(['canvas']);
-      log('export_$index.png');
+
+      final fileName = 'export_$index.png';
+      log('filename = $fileName');
 
       await Future.delayed(const Duration(milliseconds: 500));
 
       log('screenshotController is blank = ${screenshotController.isBlank}');
 
       try {
-        final result = await screenshotController.captureAndSave(
-          appDocumentsDir.path,
-          fileName: 'export_$index.png',
+        Uint8List? result = await screenshotController.capture(
           delay: const Duration(milliseconds: 500),
         );
 
-        log('size = $result ');
+        // final result = await screenshotController.captureAndSave(
+        //   appDocumentsDir.path,
+        //   fileName: 'export_$index.png',
+        //   delay: const Duration(milliseconds: 500),
+        // );
+
+        ImageResizer.resizeAndSaveImage(
+            result!, 1280, 720, "${appDocumentsDir.path}/$fileName");
+
+        log('size = ${result.lengthInBytes} ');
       } catch (e) {
         log('Error : $e');
       }
