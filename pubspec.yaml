@@ -10,6 +10,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   get: 4.6.6
   icons_launcher: ^2.1.7
   image: ^4.1.7
@@ -28,4 +29,5 @@ flutter:
 
 msix_config:
   display_name: ytThumbnail
+  logo_path: assets\yt.png
   msix_version: 1.0.0.0
