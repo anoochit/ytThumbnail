@@ -147,10 +147,11 @@ class TitleListView extends GetView<HomeController> {
         //   delay: const Duration(milliseconds: 500),
         // );
 
-        ImageResizer.resizeAndSaveImage(
-            result!, 1280, 720, "${appDocumentsDir.path}/$fileName");
-
-        log('size = ${result.lengthInBytes} ');
+        // resize
+        if (result != null) {
+          ImageResizer.resizeAndSaveImage(
+              result, 1280, 720, "${appDocumentsDir.path}/$fileName");
+        }
       } catch (e) {
         log('Error : $e');
       }
