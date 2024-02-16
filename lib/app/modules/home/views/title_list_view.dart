@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:ythumbnail/app/modules/home/controllers/home_controller.dart';
-import 'package:ythumbnail/app/modules/home/views/base_canvas_view.dart';
 
 import '../../../utils/image_util.dart';
+import '../controllers/home_controller.dart';
+import 'base_canvas_view.dart';
 
 class TitleListView extends GetView<HomeController> {
   TitleListView({Key? key}) : super(key: key);

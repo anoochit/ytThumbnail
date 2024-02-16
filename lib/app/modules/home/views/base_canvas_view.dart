@@ -29,8 +29,8 @@ class BaseCanvasView extends GetView<HomeController> {
                 if (xfile != null) {
                   controller.baseImage = await xfile.readAsBytes();
 
-                  if (controller.baseTitle.isEmpty) {
-                    controller.baseTitle.value = controller.sampleTitle;
+                  if (controller.listTitle.isNotEmpty) {
+                    controller.baseTitle.value = controller.listTitle.first;
                   }
 
                   controller.update(['canvas']);
