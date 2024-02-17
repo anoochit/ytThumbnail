@@ -41,7 +41,7 @@ Result thumbnail image 2
 - [x] Bulk export
 - [x] Resize image
 - [ ] Update Text properties
-- [ ] Drag widget to change a position
+- [x] Drag widget to change a position
 - [ ] Export selected item
 - [ ] Bulk import title
 - [ ] Add more widget eg: Image
