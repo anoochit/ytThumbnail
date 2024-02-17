@@ -42,9 +42,9 @@ Result thumbnail image 2
 - [x] Add Text title
 - [x] Bulk export
 - [x] Resize image
-- [] Update Text properties
-- [] Drag widget to change a position
-- [] Export selected item
-- [] Bulk import title
-- [] Add more widget eg: Image
-- [] More thumbnail size eg: Facebook post
+- [ ] Update Text properties
+- [ ] Drag widget to change a position
+- [ ] Export selected item
+- [ ] Bulk import title
+- [ ] Add more widget eg: Image
+- [ ] More thumbnail size eg: Facebook post
