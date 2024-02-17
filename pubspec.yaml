@@ -1,5 +1,5 @@
 name: ythumbnail
-version: 1.0.0+1
+version: 1.1.0+2
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -30,4 +30,4 @@ flutter:
 msix_config:
   display_name: ytThumbnail
   logo_path: assets\yt.png
-  msix_version: 1.0.0.0
+  msix_version: 1.1.0.0
