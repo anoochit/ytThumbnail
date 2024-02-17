@@ -1,6 +1,4 @@
-# ytThumbnail
-
-## YouTube Thumbnail Generator: Create Eye-Catching Thumbnails in Seconds
+# YouTube Thumbnail Generator: Create Eye-Catching Thumbnails in Seconds
 
 This app simplifies YouTube thumbnail creation, saving you time and effort. With its intuitive interface and powerful features, you can craft professional-looking thumbnails directly from your computer.
 
