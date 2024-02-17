@@ -21,7 +21,7 @@ This app simplifies YouTube thumbnail creation, saving you time and effort. With
 3. **Bulk Generate:** Generate all thumbnails with a single click.
 4. **Export & Use:** Download your finished thumbnails in the optimal 1280x720 size and upload them to your YouTube videos.
 
-**Screenshots**
+## Screenshots
 
 App screen
 
@@ -35,7 +35,7 @@ Result thumbnail image 2
 
 ![](/screenshots/export_1.png)
 
-**Todo**
+## Todo
 
 - [x] Add Text title
 - [x] Bulk export
@@ -45,4 +45,17 @@ Result thumbnail image 2
 - [ ] Export selected item
 - [ ] Bulk import title
 - [ ] Add more widget eg: Image
-- [ ] More thumbnail size eg: Facebook post
+- [ ] Add more thumbnail size eg: Facebook post
+- [ ] Add more desktop platform eg: macOS, Linux with installer
+
+## Run
+
+```bash
+flutter run -d windows
+```
+
+## Build MSIX package
+
+```bash
+dart run msix:create
+```
