@@ -36,3 +36,15 @@ Result thumbnail image 1
 Result thumbnail image 2
 
 ![](/screenshots/export_1.png)
+
+**Todo**
+
+- [x] Add Text title
+- [x] Bulk export
+- [x] Resize image
+- [] Update Text properties
+- [] Drag widget to change a position
+- [] Export selected item
+- [] Bulk import title
+- [] Add more widget eg: Image
+- [] More thumbnail size eg: Facebook post

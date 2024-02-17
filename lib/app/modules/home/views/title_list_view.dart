@@ -89,6 +89,7 @@ class TitleListView extends GetView<HomeController> {
 
   exportImage(BuildContext context) async {
     if ((controller.listTitle.isNotEmpty) && (controller.baseImage != null)) {
+      // TODO : Change to progress bar
       // show progress
       showAdaptiveDialog(
         barrierDismissible: false,
@@ -99,16 +100,9 @@ class TitleListView extends GetView<HomeController> {
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // CircularProgressIndicator.adaptive(),
                 Icon(Icons.schedule),
                 SizedBox(width: 16.0),
-
                 Text('Generating...'),
-                // Spacer(),
-                // IconButton(
-                //   onPressed: () => Get.back(),
-                //   icon: const Icon(Icons.close),
-                // )
               ],
             ),
             actionsAlignment: MainAxisAlignment.center,
@@ -150,15 +144,19 @@ class TitleListView extends GetView<HomeController> {
       log('screenshotController is blank = ${screenshotController.isBlank}');
 
       try {
+        // capture image
         Uint8List? result = await screenshotController.capture(
           delay: const Duration(milliseconds: 50),
         );
 
-        // final result = await screenshotController.captureAndSave(
-        //   appDocumentsDir.path,
-        //   fileName: 'export_$index.png',
-        //   delay: const Duration(milliseconds: 100),
-        // );
+        /*
+        // Capture and save image
+        final result = await screenshotController.captureAndSave(
+          appDocumentsDir.path,
+          fileName: 'export_$index.png',
+          delay: const Duration(milliseconds: 100),
+        );
+        */
 
         // resize
         if (result != null) {
