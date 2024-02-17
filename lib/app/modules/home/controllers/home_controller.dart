@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -9,11 +8,6 @@ class HomeController extends GetxController {
   Uint8List? baseImage;
 
   RxString baseTitle = ''.obs;
-
-  String sampleTitle =
-      'Aliquip do nostrud anim voluptate dolor culpa reprehenderit veniam ad minim nulla ut anim adipisicing.';
-
-  // image
 
   @override
   void onInit() {
@@ -30,8 +24,10 @@ class HomeController extends GetxController {
       'Consectetur irure exercitation ea ut id consectetur non deserunt proident excepteur ex labore.',
     ];
 
-    for (var element in sample) {
-      listTitle.add(element);
+    if (kDebugMode) {
+      for (var element in sample) {
+        listTitle.add(element);
+      }
     }
 
     super.onInit();
