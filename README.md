@@ -47,6 +47,7 @@ Result thumbnail image 2
 - [ ] Add more widget eg: Image
 - [ ] Add more thumbnail size eg: Facebook post
 - [ ] Add more desktop platform eg: macOS, Linux with installer
+- [ ] Add an AI to generate a title
 
 ## Run
 
