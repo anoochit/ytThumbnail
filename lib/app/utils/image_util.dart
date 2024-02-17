@@ -13,6 +13,7 @@ class ImageResizer {
       originalImage,
       width: width,
       height: height,
+      interpolation: img.Interpolation.cubic,
     );
 
     // Save the resized image to a file
