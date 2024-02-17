@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:ythumbnail/app/modules/home/views/drag_text_widget.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -11,6 +12,7 @@ ScreenshotController screenshotController =
 
 class BaseCanvasView extends GetView<HomeController> {
   const BaseCanvasView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -58,25 +60,15 @@ class BaseCanvasView extends GetView<HomeController> {
                                   controller.baseImage!,
                                   fit: BoxFit.fitWidth,
                                 ),
-                                Positioned(
-                                  top: 120 + 32,
-                                  left: 72 + 16,
-                                  child: SizedBox(
-                                    width: constraints.maxWidth - 132 - 32,
-                                    child: Text(
-                                      controller.baseTitle.value,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displayLarge!
-                                          .copyWith(color: Colors.white),
-                                    ),
-                                  ),
-                                )
+                                DragTextWidget(
+                                  constraints: constraints,
+                                  controller: controller,
+                                ),
                               ],
                             ),
                           );
                         })
-                      : Container();
+                      : const SizedBox();
                 },
               ),
             ),
