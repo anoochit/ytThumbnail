@@ -9,6 +9,8 @@ class HomeController extends GetxController {
 
   RxString baseTitle = ''.obs;
 
+  RxBool editVisible = true.obs;
+
   @override
   void onInit() {
     const sample = [

@@ -136,6 +136,7 @@ class TitleListView extends GetView<HomeController> {
       log(controller.listTitle[index]);
       // update ui
       controller.baseTitle.value = controller.listTitle[index];
+      controller.editVisible.value = false;
       controller.update(['canvas']);
 
       final fileName = 'export_$index.png';

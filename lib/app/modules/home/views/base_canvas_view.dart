@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:ythumbnail/app/modules/home/views/drag_text_widget.dart';
 
 import '../controllers/home_controller.dart';
+import 'draggable_widget_view.dart';
 
 ScreenshotController screenshotController =
     screenshotController = ScreenshotController();
@@ -60,10 +60,15 @@ class BaseCanvasView extends GetView<HomeController> {
                                   controller.baseImage!,
                                   fit: BoxFit.fitWidth,
                                 ),
-                                DragTextWidget(
-                                  constraints: constraints,
-                                  controller: controller,
-                                ),
+                                DraggableWidgetView(
+                                  visible: controller.editVisible.value,
+                                  child: Text(
+                                    controller.baseTitle.value,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge,
+                                  ),
+                                )
                               ],
                             ),
                           );
