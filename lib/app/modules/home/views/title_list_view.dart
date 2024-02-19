@@ -17,6 +17,7 @@ class TitleListView extends GetView<HomeController> {
   TitleListView({Key? key}) : super(key: key);
 
   final TextEditingController titleTextController = TextEditingController();
+  final TextEditingController titleBulkTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +33,19 @@ class TitleListView extends GetView<HomeController> {
                 border: InputBorder.none,
                 hintText: 'Video title ...',
                 suffixIcon: IconButton(
-                  onPressed: () {
-                    final title = titleTextController.text.trim();
-                    if (title.isNotEmpty) {
-                      // add title
-                      controller.listTitle.add(title);
-                      titleTextController.clear();
-                    }
-                  },
-                  icon: const Icon(Icons.add_circle_rounded),
+                  // show dialog to import title in multiple line
+                  onPressed: () => importTitle(context, constraints),
+                  icon: const Icon(Icons.upload_sharp),
                 ),
               ),
+              onFieldSubmitted: (value) {
+                final title = titleTextController.text.trim();
+                if (title.isNotEmpty) {
+                  // add title
+                  controller.listTitle.add(title);
+                  titleTextController.clear();
+                }
+              },
             ),
           ),
           const Divider(height: 1),
@@ -165,6 +168,9 @@ class TitleListView extends GetView<HomeController> {
       } catch (e) {
         log('Error : $e');
       }
+
+      controller.editVisible.value = true;
+      controller.update(['canvas']);
     }
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -176,5 +182,81 @@ class TitleListView extends GetView<HomeController> {
       ),
     );
     Get.back();
+  }
+
+  importTitle(BuildContext context, BoxConstraints constraints) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            width: constraints.maxWidth * 2,
+            height: 410,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Import Title',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: titleBulkTextController,
+                    decoration: InputDecoration(
+                      hintText: 'Type a title per line',
+                      border: OutlineInputBorder(),
+                    ),
+                    maxLines: 10,
+                  ),
+                  SizedBox(height: 16.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Get.back(),
+                        child: Text('Cancel'),
+                      ),
+                      SizedBox(width: 8.0),
+                      ElevatedButton(
+                        onPressed: () {
+                          // import
+                          final bulkTitle = titleBulkTextController.text.trim();
+                          if (bulkTitle.isNotEmpty) {
+                            final titles = bulkTitle.split('\n');
+                            log('title size = ${titles.length}');
+
+                            titles.forEach((element) {
+                              final title = element.trim();
+                              if (title.isNotEmpty) {
+                                controller.listTitle.add(title);
+                              }
+                            });
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text(
+                                  'Import ${titles.length} titles complete!',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            );
+
+                            Get.back();
+                          }
+                        },
+                        child: Text('Import'),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
