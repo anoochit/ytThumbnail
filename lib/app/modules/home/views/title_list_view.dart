@@ -150,14 +150,12 @@ class TitleListView extends GetView<HomeController> {
           delay: const Duration(milliseconds: 50),
         );
 
-        /*
         // Capture and save image
-        final result = await screenshotController.captureAndSave(
-          appDocumentsDir.path,
-          fileName: 'export_$index.png',
-          delay: const Duration(milliseconds: 100),
-        );
-        */
+        // final result = await screenshotController.captureAndSave(
+        //   appDocumentsDir.path,
+        //   fileName: 'export_$index.png',
+        //   delay: const Duration(milliseconds: 100),
+        // );
 
         // resize
         if (result != null) {

@@ -127,7 +127,7 @@ class DraggableIcon extends StatelessWidget {
       child: Icon(
         Icons.add,
         color: Colors.white.withOpacity(0.5),
-        size: 24,
+        size: 12,
       ),
     );
   }

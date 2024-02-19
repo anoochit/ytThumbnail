@@ -52,24 +52,30 @@ class BaseCanvasView extends GetView<HomeController> {
                 builder: (controller) {
                   return (controller.baseImage != null)
                       ? LayoutBuilder(builder: (context, constraints) {
+                          final scwidth = constraints.maxWidth;
+                          final scheight = scwidth / 1.777777777777778;
                           return Screenshot(
                             controller: screenshotController,
-                            child: Stack(
-                              children: [
-                                Image.memory(
-                                  controller.baseImage!,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                DraggableWidgetView(
-                                  visible: controller.editVisible.value,
-                                  child: Text(
-                                    controller.baseTitle.value,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge,
+                            child: SizedBox(
+                              width: scwidth,
+                              height: scheight,
+                              child: Stack(
+                                children: [
+                                  Image.memory(
+                                    controller.baseImage!,
+                                    fit: BoxFit.fitWidth,
                                   ),
-                                )
-                              ],
+                                  DraggableWidgetView(
+                                    visible: controller.editVisible.value,
+                                    child: Text(
+                                      controller.baseTitle.value,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         })
