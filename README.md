@@ -27,13 +27,17 @@ App screen
 
 ![](/screenshots/export_3.png)
 
-Result thumbnail image 1
+App screen
 
-![](/screenshots/export_0.png)
+![](/screenshots/export_4.png)
 
 Result thumbnail image 2
 
-![](/screenshots/export_1.png)
+![](/screenshots/export_5.png)
+
+Result thumbnail image 1
+
+![](/screenshots/export_0.png)
 
 ## Todo
 
@@ -43,8 +47,10 @@ Result thumbnail image 2
 - [x] Drag widget to change a position
 - [x] Bulk import title
 - [x] Add more thumbnail size eg: Facebook post accodring base image
-- [ ] Update Text properties
-- [ ] Export selected item
+- [x] Export selected item
+- [x] Text jusify
+- [x] Auto text color
+- [ ] Assign text color
 - [ ] Add more widget eg: Image
 - [ ] Add more desktop platform eg: macOS, Linux with installer
 - [ ] Add an AI to generate a title
