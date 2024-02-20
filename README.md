@@ -40,12 +40,12 @@ Result thumbnail image 2
 - [x] Add Text title
 - [x] Bulk export
 - [x] Resize image
-- [ ] Update Text properties
 - [x] Drag widget to change a position
+- [x] Bulk import title
+- [x] Add more thumbnail size eg: Facebook post accodring base image
+- [ ] Update Text properties
 - [ ] Export selected item
-- [ ] Bulk import title
 - [ ] Add more widget eg: Image
-- [ ] Add more thumbnail size eg: Facebook post
 - [ ] Add more desktop platform eg: macOS, Linux with installer
 - [ ] Add an AI to generate a title
 

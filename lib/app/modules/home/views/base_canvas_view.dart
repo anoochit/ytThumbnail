@@ -44,7 +44,7 @@ class BaseCanvasView extends GetView<HomeController> {
                         // calculate canvas ratio according to base image
                         double scwidth = screen.maxWidth;
                         double scheight = screen.maxHeight;
-
+                        log('----------------------------------------');
                         log('screen = ${screen.maxWidth} x ${screen.maxHeight}');
                         log('image = ${controller.baseImageWidth} x ${controller.baseImageHeight}');
                         log('ratio = ${controller.baseImageRatio}');
@@ -110,7 +110,7 @@ class BaseCanvasView extends GetView<HomeController> {
       controller: screenshotController,
       child: InkWell(
         onTap: () => pickBaseImage(),
-        child: Container(
+        child: SizedBox(
           // color: Colors.amber,
           width: scwidth,
           height: scheight,
@@ -123,14 +123,16 @@ class BaseCanvasView extends GetView<HomeController> {
                 visible: controller.editVisible.value,
                 child: AutoSizeText(
                   controller.baseTitle.value,
+                  textAlign: controller.textJusify.value,
+                  textScaleFactor: 2.5,
                   style: GoogleFonts.kanit(
-                    textStyle: Theme.of(context)
-                        .textTheme
-                        .displayLarge!
-                        .copyWith(color: controller.bodyTextColor.value),
+                    textStyle:
+                        Theme.of(context).textTheme.displayLarge!.copyWith(
+                              color: controller.bodyTextColor.value,
+                              height: 1.2,
+                            ),
                   ),
-                  maxFontSize: 180.0,
-                  maxLines: 3,
+                  maxLines: 4,
                 ),
               )
             ],

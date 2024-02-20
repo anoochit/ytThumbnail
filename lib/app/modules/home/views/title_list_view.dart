@@ -31,7 +31,7 @@ class TitleListView extends GetView<HomeController> {
               controller: titleTextController,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Video title ...',
+                hintText: 'Enter your title ...',
                 suffixIcon: IconButton(
                   // show dialog to import title in multiple line
                   onPressed: () => importTitle(context, constraints),
@@ -49,6 +49,32 @@ class TitleListView extends GetView<HomeController> {
             ),
           ),
           const Divider(height: 1),
+          (controller.listTitle.isNotEmpty)
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () => setTextJusify(TextAlign.left),
+                      icon: const Icon(
+                        Icons.format_align_left,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => setTextJusify(TextAlign.center),
+                      icon: const Icon(
+                        Icons.format_align_center,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => setTextJusify(TextAlign.right),
+                      icon: const Icon(
+                        Icons.format_align_right,
+                      ),
+                    )
+                  ],
+                )
+              : const SizedBox(),
+          const Divider(height: 1),
           Expanded(
             child: Obx(
               () => ListView.builder(
@@ -62,6 +88,7 @@ class TitleListView extends GetView<HomeController> {
                       controller.listTitle[index],
                     ),
                     onTap: () {
+                      controller.currentTitleIndex.value = index;
                       controller.baseTitle.value = controller.listTitle[index];
                       controller.update(['canvas']);
                     },
@@ -76,21 +103,38 @@ class TitleListView extends GetView<HomeController> {
               ),
             ),
           ),
+          const SizedBox(height: 8.0),
+          // export current title
           Container(
             width: constraints.maxWidth,
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: ElevatedButton.icon(
-              onPressed: () => exportImage(context),
-              icon: const Icon(Icons.download_for_offline),
-              label: const Text('Export ...'),
+              onPressed: () => exportImage(
+                context: context,
+                currentIndex: controller.currentTitleIndex.value,
+              ),
+              icon: const Icon(Icons.download),
+              label: const Text('Export...'),
             ),
-          )
+          ),
+          const SizedBox(height: 8.0),
+          // export all titles
+          Container(
+            width: constraints.maxWidth,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ElevatedButton.icon(
+              onPressed: () => exportImage(context: context),
+              icon: const Icon(Icons.download),
+              label: const Text('Export All ...'),
+            ),
+          ),
+          const SizedBox(height: 8.0),
         ],
       );
     });
   }
 
-  exportImage(BuildContext context) async {
+  exportImage({required BuildContext context, int? currentIndex}) async {
     if ((controller.listTitle.isNotEmpty) && (controller.baseImage != null)) {
       // TODO : Change to progress bar
       // show progress
@@ -114,7 +158,7 @@ class TitleListView extends GetView<HomeController> {
       );
 
       // generate image
-      generateImage(context);
+      generateImage(context, currentIndex);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -128,54 +172,23 @@ class TitleListView extends GetView<HomeController> {
     }
   }
 
-  Future<void> generateImage(BuildContext context) async {
+  Future<void> generateImage(BuildContext context, [int? currentIndex]) async {
+    // get document library
     final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
-
+    // title length
     final titleLength = controller.listTitle.length;
-
     log('lenght = ${controller.listTitle.length}');
-
-    for (int index = 0; index < titleLength; index++) {
-      log(controller.listTitle[index]);
-      // update ui
-      controller.baseTitle.value = controller.listTitle[index];
-      controller.editVisible.value = false;
-      controller.update(['canvas']);
-
-      final fileName = 'export_$index.png';
-      log('filename = $fileName');
-
-      log('screenshotController is blank = ${screenshotController.isBlank}');
-
-      try {
-        // capture image
-        Uint8List? result = await screenshotController.capture(
-          delay: const Duration(milliseconds: 50),
-        );
-
-        // Capture and save image
-        // final result = await screenshotController.captureAndSave(
-        //   appDocumentsDir.path,
-        //   fileName: 'export_$index.png',
-        //   delay: const Duration(milliseconds: 100),
-        // );
-
-        // resize to base image size
-        if (result != null) {
-          ImageResizer.resizeAndSaveImage(
-            result,
-            controller.baseImageWidth.value.toInt(),
-            controller.baseImageHeight.value.toInt(),
-            "${appDocumentsDir.path}/$fileName",
-          );
-        }
-      } catch (e) {
-        log('Error : $e');
+    // check export type
+    if (currentIndex == null) {
+      // export all
+      for (int index = 0; index < titleLength; index++) {
+        await captureAndSave(index, appDocumentsDir);
       }
-
-      controller.editVisible.value = true;
-      controller.update(['canvas']);
+    } else {
+      // export single
+      await captureAndSave(currentIndex, appDocumentsDir);
     }
+    // show result
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.green,
@@ -186,6 +199,48 @@ class TitleListView extends GetView<HomeController> {
       ),
     );
     Get.back();
+  }
+
+  Future<void> captureAndSave(int index, Directory appDocumentsDir) async {
+    log(controller.listTitle[index]);
+    // update ui
+    controller.baseTitle.value = controller.listTitle[index];
+    controller.editVisible.value = false;
+    controller.update(['canvas']);
+
+    final fileName = 'export_$index.png';
+    log('filename = $fileName');
+
+    log('screenshotController is blank = ${screenshotController.isBlank}');
+
+    try {
+      // capture image
+      Uint8List? result = await screenshotController.capture(
+        delay: const Duration(milliseconds: 50),
+      );
+
+      // Capture and save image
+      // final result = await screenshotController.captureAndSave(
+      //   appDocumentsDir.path,
+      //   fileName: 'export_$index.png',
+      //   delay: const Duration(milliseconds: 100),
+      // );
+
+      // resize to base image size
+      if (result != null) {
+        ImageResizer.resizeAndSaveImage(
+          result,
+          controller.baseImageWidth.value.toInt(),
+          controller.baseImageHeight.value.toInt(),
+          "${appDocumentsDir.path}/$fileName",
+        );
+      }
+    } catch (e) {
+      log('Error : $e');
+    }
+
+    controller.editVisible.value = true;
+    controller.update(['canvas']);
   }
 
   importTitle(BuildContext context, BoxConstraints constraints) {
@@ -262,5 +317,10 @@ class TitleListView extends GetView<HomeController> {
         );
       },
     );
+  }
+
+  setTextJusify(TextAlign align) {
+    controller.textJusify.value = align;
+    controller.update(['canvas']);
   }
 }
