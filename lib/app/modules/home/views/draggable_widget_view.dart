@@ -126,10 +126,10 @@ class DraggableIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
       visible: visible,
-      child: Icon(
+      child: const Icon(
         Icons.add,
-        color: Colors.white.withOpacity(0.5),
-        size: 12,
+        color: Colors.lightGreen,
+        size: 18,
       ),
     );
   }

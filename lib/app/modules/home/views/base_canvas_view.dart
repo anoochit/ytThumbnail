@@ -111,7 +111,7 @@ class BaseCanvasView extends GetView<HomeController> {
       child: InkWell(
         onTap: () => pickBaseImage(),
         child: Container(
-          color: Colors.amber,
+          // color: Colors.amber,
           width: scwidth,
           height: scheight,
           child: Stack(
