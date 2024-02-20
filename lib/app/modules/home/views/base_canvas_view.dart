@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:screenshot/screenshot.dart';
 
 import '../controllers/home_controller.dart';
@@ -41,6 +43,7 @@ class BaseCanvasView extends GetView<HomeController> {
               builder: (controller) {
                 return (controller.baseImage != null)
                     ? LayoutBuilder(builder: (context, screen) {
+                        // calculate canvas ratio according to base image
                         double scwidth = screen.maxWidth;
                         double scheight = screen.maxHeight;
 
@@ -91,37 +94,8 @@ class BaseCanvasView extends GetView<HomeController> {
                           }
                         }
 
-                        return Screenshot(
-                          controller: screenshotController,
-                          child: InkWell(
-                            onTap: () => pickBaseImage(),
-                            child: Container(
-                              color: Colors.amber,
-                              width: scwidth,
-                              height: scheight,
-                              child: Stack(
-                                children: [
-                                  Image.memory(
-                                    controller.baseImage!,
-                                  ),
-                                  DraggableWidgetView(
-                                    visible: controller.editVisible.value,
-                                    child: AutoSizeText(
-                                      controller.baseTitle.value,
-                                      style: GoogleFonts.kanit(
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .displayLarge,
-                                      ),
-                                      maxFontSize: 180.0,
-                                      maxLines: 3,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        return canvasThumbnail(
+                            scwidth, scheight, controller, context);
                       })
                     : const SizedBox();
               },
@@ -132,25 +106,70 @@ class BaseCanvasView extends GetView<HomeController> {
     );
   }
 
+  Screenshot canvasThumbnail(double scwidth, double scheight,
+      HomeController controller, BuildContext context) {
+    return Screenshot(
+      controller: screenshotController,
+      child: InkWell(
+        onTap: () => pickBaseImage(),
+        child: Container(
+          color: Colors.amber,
+          width: scwidth,
+          height: scheight,
+          child: Stack(
+            children: [
+              Image.memory(
+                controller.baseImage!,
+              ),
+              DraggableWidgetView(
+                visible: controller.editVisible.value,
+                child: AutoSizeText(
+                  controller.baseTitle.value,
+                  style: GoogleFonts.kanit(
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: controller.bodyTextColor.value),
+                  ),
+                  maxFontSize: 180.0,
+                  maxLines: 3,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   pickBaseImage() async {
     {
       // add base image
       final picker = ImagePicker();
       final xfile = await picker.pickImage(source: ImageSource.gallery);
       if (xfile != null) {
+        // read image data
         final baseImage = await xfile.readAsBytes();
         controller.baseImage = baseImage;
 
+        // get base image size for export later
         final decodedImage = await decodeImageFromList(baseImage);
         controller.baseImageWidth.value = decodedImage.width.toDouble();
         controller.baseImageHeight.value = decodedImage.height.toDouble();
         controller.baseImageRatio.value =
             decodedImage.width / decodedImage.height;
 
+        // get color palette from image and set default text color
+        final palette = await PaletteGenerator.fromImage(decodedImage);
+        controller.bodyTextColor.value =
+            palette.dominantColor!.bodyTextColor.withAlpha(255);
+
+        // set default title
         if (controller.listTitle.isNotEmpty) {
           controller.baseTitle.value = controller.listTitle.first;
         }
 
+        // update canvas
         controller.update(['canvas']);
       }
     }

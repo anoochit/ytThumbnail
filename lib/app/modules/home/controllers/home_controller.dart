@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +19,8 @@ class HomeController extends GetxController {
 
   RxDouble screenWidth = 0.0.obs;
   RxDouble screenHeight = 0.0.obs;
+
+  Rx<Color> bodyTextColor = const Color(0xFF42A5F5).obs;
 
   /*
 
