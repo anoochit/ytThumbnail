@@ -108,7 +108,7 @@ class BaseCanvasView extends GetView<HomeController> {
       HomeController controller, BuildContext context) {
     return Screenshot(
       controller: screenshotController,
-      child: InkWell(
+      child: GestureDetector(
         onTap: () => pickBaseImage(),
         child: SizedBox(
           // color: Colors.amber,
