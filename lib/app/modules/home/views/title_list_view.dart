@@ -193,7 +193,7 @@ class TitleListView extends GetView<HomeController> {
       context: context,
       builder: (context) {
         return Dialog(
-          child: Container(
+          child: SizedBox(
             width: constraints.maxWidth * 2,
             height: 410,
             child: Padding(
@@ -205,24 +205,24 @@ class TitleListView extends GetView<HomeController> {
                     'Import Title',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   TextFormField(
                     controller: titleBulkTextController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Type a title per line',
                       border: OutlineInputBorder(),
                     ),
                     maxLines: 10,
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
                         onPressed: () => Get.back(),
-                        child: Text('Cancel'),
+                        child: const Text('Cancel'),
                       ),
-                      SizedBox(width: 8.0),
+                      const SizedBox(width: 8.0),
                       ElevatedButton(
                         onPressed: () {
                           // import
@@ -231,12 +231,12 @@ class TitleListView extends GetView<HomeController> {
                             final titles = bulkTitle.split('\n');
                             log('title size = ${titles.length}');
 
-                            titles.forEach((element) {
+                            for (var element in titles) {
                               final title = element.trim();
                               if (title.isNotEmpty) {
                                 controller.listTitle.add(title);
                               }
-                            });
+                            }
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -251,7 +251,7 @@ class TitleListView extends GetView<HomeController> {
                             Get.back();
                           }
                         },
-                        child: Text('Import'),
+                        child: const Text('Import'),
                       )
                     ],
                   )

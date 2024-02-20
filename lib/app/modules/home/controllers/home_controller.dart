@@ -15,6 +15,9 @@ class HomeController extends GetxController {
   RxDouble baseImageHeight = 100.0.obs;
   RxDouble baseImageRatio = 1.0.obs;
 
+  RxDouble screenWidth = 0.0.obs;
+  RxDouble screenHeight = 0.0.obs;
+
   /*
 
 Enim dolor est exercitation exercitation exercitation irure cillum non esse do.

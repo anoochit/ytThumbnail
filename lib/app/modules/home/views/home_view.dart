@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -16,23 +17,27 @@ class HomeView extends GetView<HomeController> {
         surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Flex(
-        direction: Axis.horizontal,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          const Expanded(
-            flex: 12,
-            child: BaseCanvasView(),
-          ),
-          const VerticalDivider(
-            width: 1,
-          ),
-          Flexible(
-            flex: 4,
-            child: TitleListView(),
-          ),
-        ],
-      ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        controller.screenWidth.value = constraints.maxWidth.toDouble();
+        controller.screenHeight.value = constraints.maxHeight.toDouble();
+        return Flex(
+          direction: Axis.horizontal,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            const Expanded(
+              flex: 12,
+              child: BaseCanvasView(),
+            ),
+            const VerticalDivider(
+              width: 1,
+            ),
+            Flexible(
+              flex: 4,
+              child: TitleListView(),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

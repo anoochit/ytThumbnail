@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +35,7 @@ class DraggableWidgetView extends GetView<DraggableController> {
                   },
                   child: GestureDetector(
                     onLongPress: () {
-                      print("Long press detected");
+                      log("Long press detected");
                       // You can add your desired functionality here
                     },
                     child: Container(
