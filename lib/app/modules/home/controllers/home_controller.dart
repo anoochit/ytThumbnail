@@ -11,6 +11,10 @@ class HomeController extends GetxController {
 
   RxBool editVisible = true.obs;
 
+  RxDouble baseImageWidth = 100.0.obs;
+  RxDouble baseImageHeight = 100.0.obs;
+  RxDouble baseImageRatio = 1.0.obs;
+
   /*
 
 Enim dolor est exercitation exercitation exercitation irure cillum non esse do.

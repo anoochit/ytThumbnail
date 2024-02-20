@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -30,7 +34,16 @@ class BaseCanvasView extends GetView<HomeController> {
                 final xfile =
                     await picker.pickImage(source: ImageSource.gallery);
                 if (xfile != null) {
-                  controller.baseImage = await xfile.readAsBytes();
+                  final baseImage = await xfile.readAsBytes();
+                  controller.baseImage = baseImage;
+
+                  final decodedImage = await decodeImageFromList(baseImage);
+                  controller.baseImageWidth.value =
+                      decodedImage.width.toDouble();
+                  controller.baseImageHeight.value =
+                      decodedImage.height.toDouble();
+                  controller.baseImageRatio.value =
+                      decodedImage.width / decodedImage.height;
 
                   if (controller.listTitle.isNotEmpty) {
                     controller.baseTitle.value = controller.listTitle.first;
@@ -52,8 +65,18 @@ class BaseCanvasView extends GetView<HomeController> {
                 builder: (controller) {
                   return (controller.baseImage != null)
                       ? LayoutBuilder(builder: (context, constraints) {
-                          final scwidth = constraints.maxWidth;
-                          final scheight = scwidth / 1.777777777777778;
+                          double scwidth = 0;
+                          log('screen width = ${constraints.maxWidth}');
+                          log('image width = ${controller.baseImageWidth}');
+                          if (controller.baseImageWidth.value <
+                              constraints.maxWidth) {
+                            scwidth = controller.baseImageWidth.value;
+                          } else {
+                            scwidth = constraints.maxWidth;
+                          }
+
+                          final scheight =
+                              scwidth / controller.baseImageRatio.value;
                           return Screenshot(
                             controller: screenshotController,
                             child: SizedBox(
@@ -63,15 +86,18 @@ class BaseCanvasView extends GetView<HomeController> {
                                 children: [
                                   Image.memory(
                                     controller.baseImage!,
-                                    fit: BoxFit.fitWidth,
+                                    // fit: BoxFit.fitWidth,
                                   ),
                                   DraggableWidgetView(
                                     visible: controller.editVisible.value,
-                                    child: Text(
+                                    child: AutoSizeText(
                                       controller.baseTitle.value,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displayLarge,
+                                      style: GoogleFonts.kanit(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge,
+                                      ),
+                                      maxLines: 4,
                                     ),
                                   )
                                 ],
