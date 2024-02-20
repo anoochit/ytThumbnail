@@ -49,31 +49,33 @@ class TitleListView extends GetView<HomeController> {
             ),
           ),
           const Divider(height: 1),
-          (controller.listTitle.isNotEmpty)
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () => setTextJusify(TextAlign.left),
-                      icon: const Icon(
-                        Icons.format_align_left,
+          Obx(
+            () => (controller.listTitle.isNotEmpty)
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () => setTextJusify(TextAlign.left),
+                        icon: const Icon(
+                          Icons.format_align_left,
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () => setTextJusify(TextAlign.center),
-                      icon: const Icon(
-                        Icons.format_align_center,
+                      IconButton(
+                        onPressed: () => setTextJusify(TextAlign.center),
+                        icon: const Icon(
+                          Icons.format_align_center,
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () => setTextJusify(TextAlign.right),
-                      icon: const Icon(
-                        Icons.format_align_right,
-                      ),
-                    )
-                  ],
-                )
-              : const SizedBox(),
+                      IconButton(
+                        onPressed: () => setTextJusify(TextAlign.right),
+                        icon: const Icon(
+                          Icons.format_align_right,
+                        ),
+                      )
+                    ],
+                  )
+                : const SizedBox(),
+          ),
           const Divider(height: 1),
           Expanded(
             child: Obx(
