@@ -150,7 +150,7 @@ class TitleListView extends GetView<HomeController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.schedule),
-                SizedBox(width: 16.0),
+                SizedBox(width: 8.0),
                 Text('Generating...'),
               ],
             ),

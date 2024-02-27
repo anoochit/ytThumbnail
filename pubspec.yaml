@@ -14,7 +14,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   get: 4.6.6
   google_fonts: ^6.1.0
-  icons_launcher: ^2.1.7
+  google_generative_ai: ^0.2.1
   image: ^4.1.7
   image_picker: ^1.0.7
   palette_generator: ^0.3.3+3
@@ -22,7 +22,7 @@ dependencies:
   screenshot: ^2.1.0
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
   msix: ^3.16.7
@@ -32,5 +32,5 @@ flutter:
 
 msix_config:
   display_name: ytThumbnail
-  logo_path: assets\yt.png
+  logo_path: assets/yt.png
   msix_version: 1.2.0.0
