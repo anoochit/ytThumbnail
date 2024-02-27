@@ -32,5 +32,6 @@ flutter:
 
 msix_config:
   display_name: ytThumbnail
-  logo_path: assets/yt.png
+  logo_path: assets\yt.png
   msix_version: 1.2.0.0
+  install_certificate: false
