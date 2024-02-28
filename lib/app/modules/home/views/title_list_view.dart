@@ -353,7 +353,7 @@ class TitleListView extends GetView<HomeController> {
       apiKey: controller.accessToken,
     );
     final prompt =
-        'Brainstrom a 5 SEO title for ${titleBulkTextController.text}, anwser as bullet list ';
+        'Brainstrom a 5 SEO title for ${titleBulkTextController.text}, anwser as bullet list';
     final content = [Content.text(prompt)];
     controller.isLoading.value = true;
     model.generateContent(content).then((value) {

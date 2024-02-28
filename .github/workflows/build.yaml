@@ -3,7 +3,7 @@ on:
     branches:
       - master
 
-name: "Build MSIX & Release"
+name: "Windows Release"
 
 jobs:
   build:
@@ -14,14 +14,22 @@ jobs:
         with:
           channel: "stable"
       - run: dart fix --apply
-      - run: sed 's/XXX/${{ secrets.TOKEN }}/g' pubspec.yaml > pubspec.sed.yaml
-      - run: cp pubspec.sed.yaml pubspec.yaml
       - run: flutter pub get
-      - run: dart run msix:create
 
-      - name: Push to Releases
-        uses: ncipollo/release-action@v1
+      - name: Build artifacts
+        run: flutter build windows --dart-define="ACCESS_TOKEN=${{ secrets.TOKEN }}" --release
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
         with:
-          artifacts: "build/windows/x64/runner/Release/ythumbnail.msix"
-          tag: v1.2.0+${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+          type: "zip"
+          filename: ytThumbnail-${{github.ref_name}}-windows.zip
+          directory: build/windows/runner/Release
+
+      - name: Windows Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: build/windows/runner/Release/ytThumbnail-${{github.ref_name}}-windows.zip
