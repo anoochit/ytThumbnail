@@ -14,12 +14,11 @@ jobs:
         with:
           channel: "stable"
       # - run: dart fix --apply
-      # - run: get-content pubspec.yaml | %{$_ -replace "XXX","${{ secrets.ACCESS_TOKEN }}"} | Set-Content pubspec.sed
-      # - run: cp pubspec.sed pubspec.yaml
-      # - run: flutter config --enable-windows-desktop
+      - run: get-content pubspec.yaml | %{$_ -replace "XXX","${{ secrets.ACCESS_TOKEN }}"} | Set-Content pubspec.sed
+      - run: cp pubspec.sed pubspec.yaml
       - run: flutter pub get
-      - run: flutter build windows --release
-      # - run: dart run msix:create
+      # - run: flutter build windows --release
+      - run: dart run msix:create
 
       # - name: Push to Releases
       #   uses: ncipollo/release-action@v1
