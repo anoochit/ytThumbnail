@@ -231,12 +231,12 @@ class TitleListView extends GetView<HomeController> {
 
       // resize to base image size
       if (result != null) {
-      ImageResizer.resizeAndSaveImage(
-        result,
-        controller.baseImageWidth.value.toInt(),
-        controller.baseImageHeight.value.toInt(),
-        "${appDocumentsDir.path}/$fileName",
-      );
+        ImageResizer.resizeAndSaveImage(
+          result,
+          controller.baseImageWidth.value.toInt(),
+          controller.baseImageHeight.value.toInt(),
+          "${appDocumentsDir.path}/$fileName",
+        );
       }
     } catch (e) {
       log('Error : $e');
@@ -276,13 +276,6 @@ class TitleListView extends GetView<HomeController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      // cancel
-                      ElevatedButton(
-                        onPressed: () => Get.back(),
-                        child: const Text('Cancel'),
-                      ),
-                      const SizedBox(width: 8.0),
-
                       // generate
                       Obx(
                         () => (controller.isLoading.value)
@@ -295,11 +288,19 @@ class TitleListView extends GetView<HomeController> {
                                 child: const Icon(Icons.smart_toy),
                               )
                             : ElevatedButton(
-                                onPressed: () => askGemini(),
-                                child: const Text('Generate Title'),
+                                onPressed: () => askGemini(context),
+                                child: const Text('Generate title'),
                               ),
                       ),
+                      Spacer(),
+
+                      // cancel
+                      ElevatedButton(
+                        onPressed: () => Get.back(),
+                        child: const Text('Cancel'),
+                      ),
                       const SizedBox(width: 8.0),
+
                       // import
                       ElevatedButton(
                         onPressed: () {
@@ -345,7 +346,7 @@ class TitleListView extends GetView<HomeController> {
     controller.update(['canvas']);
   }
 
-  askGemini() {
+  askGemini(BuildContext context) {
     // use gemini to generate 5 SEO titles with a fine tune prompt
     log(controller.accessToken);
     final model = GenerativeModel(
@@ -362,6 +363,17 @@ class TitleListView extends GetView<HomeController> {
         titleBulkTextController.text = result;
       }
       controller.isLoading.value = false;
+    }).catchError((onError) {
+      controller.isLoading.value = false;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            '$onError',
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      );
     });
   }
 }
