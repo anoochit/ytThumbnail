@@ -15,9 +15,10 @@ jobs:
           flutter-version: "3.16.9"
           channel: "stable"
       - run: dart fix --apply
-      - run: flutter pub get
+      - run: get-content pubspec.yaml | %{$_ -replace "XXX","${{ secrets.TOKEN }}"} | Set-Content pubspec.sed
+      - run: cp pubspec.sed pubspec.yaml
       - run: flutter config --enable-windows-desktop
-      - run: sed -i 's/XXX/${{ secrets.TOKEN }}/g' pubspec.yaml
+      - run: flutter pub get
       - run: dart run msix:create
 
       - name: Push to Releases
