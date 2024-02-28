@@ -26,14 +26,14 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
-  # msix: ^3.16.7
+  msix: ^3.16.7
 
 flutter:
   uses-material-design: true
 
-# msix_config:
-#   display_name: ytThumbnail
-#   logo_path: assets\yt.png
-#   msix_version: 1.2.0.0
-#   install_certificate: false
-#   windows_build_args: --dart-define="ACCESS_TOKEN=XXX"
+msix_config:
+  display_name: ytThumbnail
+  logo_path: assets\yt.png
+  msix_version: 1.2.0.0
+  install_certificate: false
+  windows_build_args: --dart-define="ACCESS_TOKEN=XXX"
