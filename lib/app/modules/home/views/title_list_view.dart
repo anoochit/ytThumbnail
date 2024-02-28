@@ -230,14 +230,14 @@ class TitleListView extends GetView<HomeController> {
       // );
 
       // resize to base image size
-      if (result != null) {
-        ImageResizer.resizeAndSaveImage(
-          result!,
-          controller.baseImageWidth.value.toInt(),
-          controller.baseImageHeight.value.toInt(),
-          "${appDocumentsDir.path}/$fileName",
-        );
-      }
+      // if (result != null) {
+      ImageResizer.resizeAndSaveImage(
+        result!,
+        controller.baseImageWidth.value.toInt(),
+        controller.baseImageHeight.value.toInt(),
+        "${appDocumentsDir.path}/$fileName",
+      );
+      // }
     } catch (e) {
       log('Error : $e');
     }
