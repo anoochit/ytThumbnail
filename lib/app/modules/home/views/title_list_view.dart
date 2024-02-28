@@ -232,7 +232,7 @@ class TitleListView extends GetView<HomeController> {
       // resize to base image size
       if (result != null) {
         ImageResizer.resizeAndSaveImage(
-          result,
+          result!,
           controller.baseImageWidth.value.toInt(),
           controller.baseImageHeight.value.toInt(),
           "${appDocumentsDir.path}/$fileName",

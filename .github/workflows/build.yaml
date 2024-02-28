@@ -14,8 +14,8 @@ jobs:
         with:
           channel: "stable"
       - run: dart fix --apply
-      # - run: sed 's/development/${{ secrets.TOKEN }}/g' pubspec.yaml > pubspec.sed.yaml
-      # - run: cp pubspec.sed.yaml pubspec.yaml
+      - run: sed 's/XXX/${{ secrets.TOKEN }}/g' pubspec.yaml > pubspec.sed.yaml
+      - run: cp pubspec.sed.yaml pubspec.yaml
       - run: flutter pub get
       - run: dart run msix:create
 
