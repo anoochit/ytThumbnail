@@ -185,11 +185,11 @@ class TitleListView extends GetView<HomeController> {
     if (currentIndex == null) {
       // export all
       for (int index = 0; index < titleLength; index++) {
-        await captureAndSave(index, appDocumentsDir);
+        await captureAndSave(context, index, appDocumentsDir);
       }
     } else {
       // export single
-      await captureAndSave(currentIndex, appDocumentsDir);
+      await captureAndSave(context, currentIndex, appDocumentsDir);
     }
     // show result
     ScaffoldMessenger.of(context).showSnackBar(
@@ -204,7 +204,8 @@ class TitleListView extends GetView<HomeController> {
     Get.back();
   }
 
-  Future<void> captureAndSave(int index, Directory appDocumentsDir) async {
+  Future<void> captureAndSave(
+      BuildContext context, int index, Directory appDocumentsDir) async {
     log(controller.listTitle[index]);
     // update ui
     controller.baseTitle.value = controller.listTitle[index];
@@ -239,7 +240,15 @@ class TitleListView extends GetView<HomeController> {
         );
       }
     } catch (e) {
-      log('Error : $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            '$e',
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      );
     }
 
     controller.editVisible.value = true;
@@ -292,7 +301,7 @@ class TitleListView extends GetView<HomeController> {
                                 child: const Text('Generate title'),
                               ),
                       ),
-                      Spacer(),
+                      const Spacer(),
 
                       // cancel
                       ElevatedButton(
