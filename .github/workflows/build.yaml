@@ -15,8 +15,6 @@ jobs:
           channel: "stable"
       - run: dart fix --apply
       - run: flutter pub get
-
-      - name: Build artifacts
       - run: flutter config --enable-windows-desktop
       - run: sed 's/XXX/${{ secrets.TOKEN }}/g' pubspec.yaml > pubspec.sed.yaml
       - run: cp pubspec.sed.yaml pubspec.yaml
