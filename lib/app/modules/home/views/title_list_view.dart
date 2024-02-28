@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:ythumbnail/gemini.dart';
 
 import '../../../utils/image_util.dart';
 import '../controllers/home_controller.dart';
@@ -272,6 +273,7 @@ class TitleListView extends GetView<HomeController> {
                     maxLines: 10,
                   ),
                   const SizedBox(height: 16.0),
+                  // cancel
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -282,7 +284,15 @@ class TitleListView extends GetView<HomeController> {
                       const SizedBox(width: 8.0),
                       ElevatedButton(
                         onPressed: () {
-                          // import
+                          // TODO : use gemini to generate 5 SEO titles with a fine tune prompt
+                          titleBulkTextController.text = accessToken;
+                        },
+                        child: const Text('Generate Title'),
+                      ),
+                      const SizedBox(width: 8.0),
+                      // import
+                      ElevatedButton(
+                        onPressed: () {
                           final bulkTitle = titleBulkTextController.text.trim();
                           if (bulkTitle.isNotEmpty) {
                             final titles = bulkTitle.split('\n');
@@ -294,7 +304,6 @@ class TitleListView extends GetView<HomeController> {
                                 controller.listTitle.add(title);
                               }
                             }
-
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 backgroundColor: Colors.green,

@@ -13,15 +13,15 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      - run: flutter pub get
       - run: dart fix --apply
       - run: sed 's/development/${{ secrets.TOKEN }}/g' pubspec.yaml > pubspec.sed.yaml
-      - run: cat pubspec.sed.yaml
-      # - run: dart run msix:create
+      - run: cp pubspec.sed.yaml pubspec.yaml
+      - run: flutter pub get
+      - run: dart run msix:create
 
-      # - name: Push to Releases
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     artifacts: "build/windows/x64/runner/Release/ythumbnail.msix"
-      #     tag: v1.2.0+${{ github.run_number }}
-      #     token: ${{ secrets.TOKEN }}
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/windows/x64/runner/Release/ythumbnail.msix"
+          tag: v1.2.0+${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
