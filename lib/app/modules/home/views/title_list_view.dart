@@ -15,7 +15,7 @@ import '../controllers/home_controller.dart';
 import 'base_canvas_view.dart';
 
 class TitleListView extends GetView<HomeController> {
-  TitleListView({Key? key}) : super(key: key);
+  TitleListView({super.key});
 
   final TextEditingController titleTextController = TextEditingController();
   final TextEditingController titleBulkTextController = TextEditingController();

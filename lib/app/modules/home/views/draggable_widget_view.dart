@@ -7,8 +7,7 @@ import '../controllers/draggable_controller.dart';
 
 class DraggableWidgetView extends GetView<DraggableController> {
   const DraggableWidgetView(
-      {Key? key, required this.child, required this.visible})
-      : super(key: key);
+      {super.key, required this.child, required this.visible});
   final Widget child;
   final bool visible;
 

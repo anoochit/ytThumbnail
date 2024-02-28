@@ -16,7 +16,7 @@ ScreenshotController screenshotController =
     screenshotController = ScreenshotController();
 
 class BaseCanvasView extends GetView<HomeController> {
-  const BaseCanvasView({Key? key}) : super(key: key);
+  const BaseCanvasView({super.key});
 
   @override
   Widget build(BuildContext context) {
