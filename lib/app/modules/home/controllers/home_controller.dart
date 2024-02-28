@@ -26,6 +26,10 @@ class HomeController extends GetxController {
 
   Rx<TextAlign> textJusify = TextAlign.left.obs;
 
+  String accessToken = '';
+
+  RxBool isLoading = false.obs;
+
   /*
 
 Enim dolor est exercitation exercitation exercitation irure cillum non esse do
@@ -43,6 +47,10 @@ Consectetur irure exercitation ea ut id consectetur non deserunt proident except
 
   @override
   void onInit() {
+    // set access token
+    accessToken = const String.fromEnvironment('ACCESS_TOKEN');
+
+    // sample title
     const sample = [
       'Enim dolor est exercitation exercitation exercitation irure cillum non esse do',
       'Amet aliquip reprehenderit mollit eiusmod velit ex et nisi in commodo Lorem culpa',
@@ -56,6 +64,7 @@ Consectetur irure exercitation ea ut id consectetur non deserunt proident except
       'Consectetur irure exercitation ea ut id consectetur non deserunt proident excepteur ex labore',
     ];
 
+    // load sample title on debug mode
     if (kDebugMode) {
       for (var element in sample) {
         listTitle.add(element);

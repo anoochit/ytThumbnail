@@ -7,8 +7,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:ythumbnail/gemini.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../utils/image_util.dart';
 import '../controllers/home_controller.dart';
@@ -139,7 +140,6 @@ class TitleListView extends GetView<HomeController> {
 
   exportImage({required BuildContext context, int? currentIndex}) async {
     if ((controller.listTitle.isNotEmpty) && (controller.baseImage != null)) {
-      // TODO : Change to progress bar
       // show progress
       showAdaptiveDialog(
         barrierDismissible: false,
@@ -273,21 +273,31 @@ class TitleListView extends GetView<HomeController> {
                     maxLines: 10,
                   ),
                   const SizedBox(height: 16.0),
-                  // cancel
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      // cancel
                       ElevatedButton(
                         onPressed: () => Get.back(),
                         child: const Text('Cancel'),
                       ),
                       const SizedBox(width: 8.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          // TODO : use gemini to generate 5 SEO titles with a fine tune prompt
-                          titleBulkTextController.text = accessToken;
-                        },
-                        child: const Text('Generate Title'),
+
+                      // generate
+                      Obx(
+                        () => (controller.isLoading.value)
+                            ? Shimmer.fromColors(
+                                baseColor:
+                                    Theme.of(context).colorScheme.primary,
+                                highlightColor: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary,
+                                child: const Icon(Icons.smart_toy),
+                              )
+                            : ElevatedButton(
+                                onPressed: () => askGemini(),
+                                child: const Text('Generate Title'),
+                              ),
                       ),
                       const SizedBox(width: 8.0),
                       // import
@@ -333,5 +343,25 @@ class TitleListView extends GetView<HomeController> {
   setTextJusify(TextAlign align) {
     controller.textJusify.value = align;
     controller.update(['canvas']);
+  }
+
+  askGemini() {
+    // use gemini to generate 5 SEO titles with a fine tune prompt
+    log(controller.accessToken);
+    final model = GenerativeModel(
+      model: 'gemini-pro',
+      apiKey: controller.accessToken,
+    );
+    final prompt =
+        'Brainstrom a 5 SEO title for ${titleBulkTextController.text}, anwser as bullet list ';
+    final content = [Content.text(prompt)];
+    controller.isLoading.value = true;
+    model.generateContent(content).then((value) {
+      if (value.text != null) {
+        final result = value.text!.replaceAll('- ', '');
+        titleBulkTextController.text = result;
+      }
+      controller.isLoading.value = false;
+    });
   }
 }

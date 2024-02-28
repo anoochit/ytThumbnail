@@ -1,11 +1,9 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ythumbnail/gemini.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
-  accessToken = const String.fromEnvironment('ACCESS_TOKEN');
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     GetMaterialApp(
