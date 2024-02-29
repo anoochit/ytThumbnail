@@ -18,7 +18,7 @@ jobs:
       - run: dart fix --apply
       - run: flutter pub get
       - name: Build artifacts
-        run: flutter build linux
+        run: flutter build linux --dart-define ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
@@ -41,6 +41,8 @@ jobs:
         with:
           channel: "stable"
       - run: dart fix --apply
+      - run: get-content pubspec.yaml | %{$_ -replace "XXX","${{ secrets.ACCESS_TOKEN }}"} | Set-Content pubspec.sed
+      - run: cp pubspec.sed pubspec.yaml
       - run: flutter pub get
       - name: Build artifacts
         run: dart run msix:create
@@ -62,7 +64,7 @@ jobs:
       - run: dart fix --apply
       - run: flutter pub get
       - name: Build artifacts
-        run: flutter build macos
+        run: flutter build macos --dart-define ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
