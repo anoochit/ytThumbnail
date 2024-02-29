@@ -13,11 +13,9 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      # - run: dart fix --apply
       - run: get-content pubspec.yaml | %{$_ -replace "XXX","${{ secrets.ACCESS_TOKEN }}"} | Set-Content pubspec.sed
       - run: cp pubspec.sed pubspec.yaml
       - run: flutter pub get
-      # - run: flutter build windows --release
       - run: dart run msix:create
 
       - name: Push to Releases
