@@ -48,10 +48,8 @@ class TitleListView extends GetView<HomeController> {
 
                   // set default title
                   controller.baseTitle.value = title;
-
                   controller.currentTitleIndex.value =
                       (controller.listTitle.length - 1);
-
                   controller.update(['canvas']);
 
                   titleTextController.clear();
