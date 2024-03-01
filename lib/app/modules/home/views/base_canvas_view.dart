@@ -167,6 +167,8 @@ class BaseCanvasView extends GetView<HomeController> {
         // set default title
         if (controller.listTitle.isNotEmpty) {
           controller.baseTitle.value = controller.listTitle.first;
+        } else {
+          controller.baseTitle.value = 'Your text place here!!';
         }
 
         // update canvas

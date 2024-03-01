@@ -45,6 +45,11 @@ class TitleListView extends GetView<HomeController> {
                 if (title.isNotEmpty) {
                   // add title
                   controller.listTitle.add(title);
+
+                  // set default title
+                  controller.baseTitle.value = title;
+                  controller.update(['canvas']);
+
                   titleTextController.clear();
                 }
               },
@@ -324,6 +329,14 @@ class TitleListView extends GetView<HomeController> {
                                 controller.listTitle.add(title);
                               }
                             }
+
+                            // set default title
+                            if (controller.listTitle.isNotEmpty) {
+                              controller.baseTitle.value =
+                                  controller.listTitle.last;
+                              controller.update(['canvas']);
+                            }
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 backgroundColor: Colors.green,
