@@ -36,4 +36,4 @@ msix_config:
   logo_path: assets\yt.png
   msix_version: 1.2.0.0
   install_certificate: false
-  windows_build_args: --dart-define="ACCESS_TOKEN=AIzaSyA8aptvkfg0a7IBVjUc3CXKpyrOAzNWwXg"
+  windows_build_args: --dart-define="ACCESS_TOKEN=XXX"
