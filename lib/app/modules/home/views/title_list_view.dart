@@ -219,7 +219,7 @@ class TitleListView extends GetView<HomeController> {
     controller.editVisible.value = false;
     controller.update(['canvas']);
 
-    final fileName = 'export_$index.png';
+    final fileName = 'export_${DateTime.now().microsecondsSinceEpoch}.png';
     log('filename = $fileName');
 
     log('screenshotController is blank = ${screenshotController.isBlank}');
