@@ -80,6 +80,12 @@ class TitleListView extends GetView<HomeController> {
                         icon: const Icon(
                           Icons.format_align_right,
                         ),
+                      ),
+                      IconButton(
+                        onPressed: () => clearListTitle(),
+                        icon: const Icon(
+                          Icons.delete_forever,
+                        ),
                       )
                     ],
                   )
@@ -413,5 +419,9 @@ class TitleListView extends GetView<HomeController> {
         ),
       );
     });
+  }
+
+  clearListTitle() {
+    controller.listTitle.clear();
   }
 }
