@@ -51,6 +51,7 @@ Result thumbnail image 1
 - [x] Text jusify
 - [x] Auto text color
 - [x] Add an AI to generate a title
+- [x] Add clear all title
 - [ ] Assign text color
 - [ ] Add more widget eg: Image
 - [ ] Add more desktop platform eg: macOS, Linux with installer
