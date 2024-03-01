@@ -385,7 +385,19 @@ class TitleListView extends GetView<HomeController> {
     controller.isLoading.value = true;
     model.generateContent(content).then((value) {
       if (value.text != null) {
-        final result = value.text!.replaceAll('- ', '');
+        String result = '';
+        if (value.text!.contains('- ')) {
+          result = value.text!.replaceAll('- ', '');
+        }
+
+        if (value.text!.contains('* ')) {
+          result = value.text!.replaceAll('* ', '');
+        }
+
+        if (value.text!.contains('**')) {
+          result = value.text!.replaceAll('**', '');
+        }
+
         titleBulkTextController.text = result;
       }
       controller.isLoading.value = false;
