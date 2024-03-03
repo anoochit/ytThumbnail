@@ -104,11 +104,7 @@ class TitleListView extends GetView<HomeController> {
                     title: Text(
                       controller.listTitle[index],
                     ),
-                    onTap: () {
-                      controller.currentTitleIndex.value = index;
-                      controller.baseTitle.value = controller.listTitle[index];
-                      controller.update(['canvas']);
-                    },
+                    onTap: () => deleteItem(index),
                     trailing: IconButton(
                       onPressed: () {
                         controller.listTitle.removeAt(index);
@@ -149,6 +145,12 @@ class TitleListView extends GetView<HomeController> {
         ],
       );
     });
+  }
+
+  void deleteItem(int index) {
+    controller.currentTitleIndex.value = index;
+    controller.baseTitle.value = controller.listTitle[index];
+    controller.update(['canvas']);
   }
 
   exportImage({required BuildContext context, int? currentIndex}) async {
@@ -380,45 +382,58 @@ class TitleListView extends GetView<HomeController> {
 
   askGemini(BuildContext context) {
     // use gemini to generate 5 SEO titles with a fine tune prompt
-    log(controller.accessToken);
-    final model = GenerativeModel(
-      model: 'gemini-pro',
-      apiKey: controller.accessToken,
-    );
-    final prompt =
-        'Brainstrom a 5 SEO title for ${titleBulkTextController.text}, anwser as bullet list';
-    final content = [Content.text(prompt)];
-    controller.isLoading.value = true;
-    model.generateContent(content).then((value) {
-      if (value.text != null) {
-        String result = '';
-        if (value.text!.contains('- ')) {
-          result = value.text!.replaceAll('- ', '');
-        }
+    if (titleBulkTextController.text.trim().isNotEmpty) {
+      log(controller.accessToken);
+      final model = GenerativeModel(
+        model: 'gemini-pro',
+        apiKey: controller.accessToken,
+      );
+      final prompt =
+          'Brainstrom a 5 SEO title for ${titleBulkTextController.text}, anwser as bullet list';
+      final content = [Content.text(prompt)];
+      controller.isLoading.value = true;
+      model.generateContent(content).then((value) {
+        log('${value.text}');
+        if (value.text != null) {
+          String result = '';
+          if (value.text!.contains('- ')) {
+            result = value.text!.replaceAll('- ', '');
+          }
 
-        if (value.text!.contains('* ')) {
-          result = value.text!.replaceAll('* ', '');
-        }
+          if (value.text!.contains('* ')) {
+            result = value.text!.replaceAll('* ', '');
+          }
 
-        if (value.text!.contains('**')) {
-          result = value.text!.replaceAll('**', '');
-        }
+          if (value.text!.contains('**')) {
+            result = value.text!.replaceAll('**', '');
+          }
 
-        titleBulkTextController.text = result;
-      }
-      controller.isLoading.value = false;
-    }).catchError((onError) {
-      controller.isLoading.value = false;
+          titleBulkTextController.text = result;
+        }
+        controller.isLoading.value = false;
+      }).catchError((onError) {
+        controller.isLoading.value = false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              '$onError',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      });
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.red,
           content: Text(
-            '$onError',
-            style: const TextStyle(color: Colors.white),
+            'Enter your prompt!!!',
+            style: TextStyle(color: Colors.white),
           ),
         ),
       );
-    });
+    }
   }
 
   clearListTitle() {
