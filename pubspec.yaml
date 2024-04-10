@@ -11,6 +11,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  gap: ^3.0.1
   get: 4.6.6
   google_fonts: ^6.1.0
   google_generative_ai: ^0.2.1
@@ -28,8 +29,12 @@ dev_dependencies:
   icons_launcher: ^2.1.7
   msix: ^3.16.7
 
+
+
 flutter:
   uses-material-design: true
+  assets:
+    - assets/base/
 
 msix_config:
   display_name: ytThumbnail

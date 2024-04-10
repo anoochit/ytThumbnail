@@ -18,7 +18,7 @@ jobs:
       - run: dart fix --apply
       - run: flutter pub get
       - name: Build artifacts
-        run: flutter build linux --dart-define=ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
+        run: flutter build linux --dart-define=ACCESS_TOKEN=${{secrets.ACCESS_TOKEN}}
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
@@ -41,7 +41,7 @@ jobs:
         with:
           channel: "stable"
       - run: dart fix --apply
-      - run: get-content pubspec.yaml | %{$_ -replace "XXX","${{ secrets.ACCESS_TOKEN }}"} | Set-Content pubspec.sed
+      - run: get-content pubspec.yaml | %{$_ -replace "XXX","${{secrets.ACCESS_TOKEN}}"} | Set-Content pubspec.sed
       - run: cp pubspec.sed pubspec.yaml
       - run: flutter pub get
       - name: Build artifacts
@@ -50,7 +50,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/v')
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{secrets.TOKEN}}
         with:
           files: build/windows/x64/runner/Release/winapp.msix
 
@@ -64,7 +64,7 @@ jobs:
       - run: dart fix --apply
       - run: flutter pub get
       - name: Build artifacts
-        run: flutter build macos --dart-define=ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
+        run: flutter build macos --dart-define=ACCESS_TOKEN=${{secrets.ACCESS_TOKEN}}
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
@@ -75,6 +75,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/v')
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{secrets.TOKEN}}
         with:
           files: build/macos/Build/Products/Release/winapp-${{github.ref_name}}-macos.zip

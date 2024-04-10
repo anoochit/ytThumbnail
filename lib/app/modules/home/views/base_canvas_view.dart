@@ -1,13 +1,18 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:ythumbnail/app/data/base_image.dart';
 
 import '../controllers/home_controller.dart';
 import 'draggable_widget_view.dart';
@@ -25,10 +30,21 @@ class BaseCanvasView extends GetView<HomeController> {
         // button
         Align(
           alignment: Alignment.center,
-          child: TextButton.icon(
-            onPressed: () => pickBaseImage(),
-            label: const Text('Add base image'),
-            icon: const Icon(Icons.add_circle),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () => pickPresetImage(context),
+                label: const Text('Add base image from preset...'),
+                icon: const Icon(Icons.image),
+              ),
+              const Gap(16.0),
+              ElevatedButton.icon(
+                onPressed: () => pickBaseImage(),
+                label: const Text('Browse base image...'),
+                icon: const Icon(Icons.folder),
+              ),
+            ],
           ),
         ),
         // base image
@@ -175,5 +191,94 @@ class BaseCanvasView extends GetView<HomeController> {
         controller.update(['canvas']);
       }
     }
+  }
+
+  pickPresetImage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Choose preset image',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                Gap(16.0),
+                Expanded(
+                  child: GridView.builder(
+                    itemCount: baseImages.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 4.0,
+                      crossAxisSpacing: 4.0,
+                    ),
+                    itemBuilder: (context, index) {
+                      return GridTile(
+                        child: InkWell(
+                          onTap: () =>
+                              loadPresetImage(image: baseImages[index]),
+                          child: Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Image.asset(
+                              baseImages[index],
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FilledButton(
+                    onPressed: () => Get.back(),
+                    child: Text('Close'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  loadPresetImage({required String image}) async {
+    final assetByteData = await rootBundle.load(image);
+
+    Uint8List baseImage = assetByteData.buffer
+        .asUint8List(assetByteData.offsetInBytes, assetByteData.lengthInBytes);
+
+    controller.baseImage = baseImage;
+
+    // get base image size for export later
+    final decodedImage = await decodeImageFromList(baseImage);
+    controller.baseImageWidth.value = decodedImage.width.toDouble();
+    controller.baseImageHeight.value = decodedImage.height.toDouble();
+    controller.baseImageRatio.value = decodedImage.width / decodedImage.height;
+
+    // get color palette from image and set default text color
+    final palette = await PaletteGenerator.fromImage(decodedImage);
+    controller.bodyTextColor.value =
+        palette.dominantColor!.bodyTextColor.withAlpha(255);
+
+    // set default title
+    if (controller.listTitle.isNotEmpty) {
+      controller.baseTitle.value = controller.listTitle.first;
+    } else {
+      controller.baseTitle.value = 'Your text place here!!';
+    }
+
+    // update canvas
+    controller.update(['canvas']);
+
+    Get.back();
   }
 }
