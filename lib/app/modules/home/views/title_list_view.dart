@@ -86,6 +86,12 @@ class TitleListView extends GetView<HomeController> {
                         icon: const Icon(
                           Icons.delete_forever,
                         ),
+                      ),
+                      IconButton(
+                        onPressed: () => newCanvas(),
+                        icon: const Icon(
+                          Icons.edit_document,
+                        ),
                       )
                     ],
                   )
@@ -438,5 +444,10 @@ class TitleListView extends GetView<HomeController> {
 
   clearListTitle() {
     controller.listTitle.clear();
+  }
+
+  newCanvas() {
+    controller.baseImage = null;
+    controller.update(['canvas']);
   }
 }

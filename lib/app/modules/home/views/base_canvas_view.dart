@@ -1,10 +1,8 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
@@ -199,7 +197,7 @@ class BaseCanvasView extends GetView<HomeController> {
       builder: (context) {
         return Dialog(
           child: Container(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             width: MediaQuery.of(context).size.width * 0.8,
             height: MediaQuery.of(context).size.height * 0.8,
             child: Column(
@@ -209,22 +207,22 @@ class BaseCanvasView extends GetView<HomeController> {
                   'Choose preset image',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
-                Gap(16.0),
+                const Gap(16.0),
                 Expanded(
                   child: GridView.builder(
                     itemCount: baseImages.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       mainAxisSpacing: 4.0,
                       crossAxisSpacing: 4.0,
                     ),
                     itemBuilder: (context, index) {
-                      return GridTile(
+                      return Card(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: InkWell(
                           onTap: () =>
                               loadPresetImage(image: baseImages[index]),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: GridTile(
                             child: Image.asset(
                               baseImages[index],
                               fit: BoxFit.contain,
@@ -239,7 +237,7 @@ class BaseCanvasView extends GetView<HomeController> {
                   alignment: Alignment.centerRight,
                   child: FilledButton(
                     onPressed: () => Get.back(),
-                    child: Text('Close'),
+                    child: const Text('Close'),
                   ),
                 ),
               ],

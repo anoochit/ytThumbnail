@@ -27,11 +27,23 @@ App screen
 
 ![](/screenshots/export_3.png)
 
+Preset images
+
+![](/screenshots/export_6.png)
+
+Import title
+
+![](/screenshots/export_7.png)
+
+Use Google Generative AI to generate SEO titles
+
+![](/screenshots/export_8.png)
+
 App screen
 
 ![](/screenshots/export_4.png)
 
-Result thumbnail image 2
+App screen with another image
 
 ![](/screenshots/export_5.png)
 
