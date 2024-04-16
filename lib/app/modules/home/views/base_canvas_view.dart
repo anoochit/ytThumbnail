@@ -124,8 +124,8 @@ class BaseCanvasView extends GetView<HomeController> {
       controller: screenshotController,
       child: GestureDetector(
         onTap: () => pickBaseImage(),
-        child: SizedBox(
-          // color: Colors.amber,
+        child: Container(
+          color: Colors.transparent,
           width: scwidth,
           height: scheight,
           child: Stack(
@@ -211,7 +211,8 @@ class BaseCanvasView extends GetView<HomeController> {
                 Expanded(
                   child: GridView.builder(
                     itemCount: baseImages.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       mainAxisSpacing: 4.0,
                       crossAxisSpacing: 4.0,

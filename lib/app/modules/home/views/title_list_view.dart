@@ -395,24 +395,20 @@ class TitleListView extends GetView<HomeController> {
         apiKey: controller.accessToken,
       );
       final prompt =
-          'Brainstrom a SEO YouTube video title for "${titleBulkTextController.text}", anwser as 5 bullet list';
+          'You are a 30 years experience in content marketer, give me a SEO YouTube video title for "${titleBulkTextController.text}" which target high-intent keywords, answer only title as 10 bullet list';
       final content = [Content.text(prompt)];
       controller.isLoading.value = true;
       model.generateContent(content).then((value) {
         log('${value.text}');
         if (value.text != null) {
           String result = '';
-          if (value.text!.contains('- ')) {
-            result = value.text!.replaceAll('- ', '');
-          }
 
-          if (value.text!.contains('* ')) {
-            result = value.text!.replaceAll('* ', '');
-          }
+          final pattern = RegExp(r"^\d+\.|\s*[-*+*]\s*");
+          final lines = value.text!.split('\n'); // Split into lines
 
-          if (value.text!.contains('**')) {
-            result = value.text!.replaceAll('**', '');
-          }
+          result = lines
+              .map((line) => line.replaceAll(pattern, "").trim())
+              .join('\n');
 
           titleBulkTextController.text = result;
         }
