@@ -38,6 +38,7 @@ class TitleListView extends GetView<HomeController> {
                   // show dialog to import title in multiple line
                   onPressed: () => importTitle(context, constraints),
                   icon: const Icon(Icons.upload_sharp),
+                  tooltip: 'Import',
                 ),
               ),
               onFieldSubmitted: (value) {
@@ -68,30 +69,35 @@ class TitleListView extends GetView<HomeController> {
                         icon: const Icon(
                           Icons.format_align_left,
                         ),
+                        tooltip: 'Jusify left',
                       ),
                       IconButton(
                         onPressed: () => setTextJusify(TextAlign.center),
                         icon: const Icon(
                           Icons.format_align_center,
                         ),
+                        tooltip: 'Jusify center',
                       ),
                       IconButton(
                         onPressed: () => setTextJusify(TextAlign.right),
                         icon: const Icon(
                           Icons.format_align_right,
                         ),
+                        tooltip: 'Jusify right',
                       ),
                       IconButton(
                         onPressed: () => clearListTitle(),
                         icon: const Icon(
                           Icons.delete_forever,
                         ),
+                        tooltip: 'Clear list title',
                       ),
                       IconButton(
                         onPressed: () => newCanvas(),
                         icon: const Icon(
                           Icons.edit_document,
                         ),
+                        tooltip: 'Clear canvas',
                       )
                     ],
                   )
@@ -116,6 +122,7 @@ class TitleListView extends GetView<HomeController> {
                         controller.listTitle.removeAt(index);
                       },
                       icon: const Icon(Icons.delete),
+                      tooltip: 'Delete item',
                     ),
                   );
                 },
@@ -132,7 +139,9 @@ class TitleListView extends GetView<HomeController> {
                 context: context,
                 currentIndex: controller.currentTitleIndex.value,
               ),
-              icon: const Icon(Icons.download),
+              icon: const Icon(
+                Icons.download,
+              ),
               label: const Text('Export...'),
             ),
           ),
@@ -315,11 +324,16 @@ class TitleListView extends GetView<HomeController> {
                                 highlightColor: Theme.of(context)
                                     .colorScheme
                                     .inversePrimary,
-                                child: const Icon(Icons.smart_toy),
+                                child: ElevatedButton.icon(
+                                  onPressed: null,
+                                  label: const Text('Generate title'),
+                                  icon: Icon(Icons.smart_toy),
+                                ),
                               )
-                            : ElevatedButton(
+                            : ElevatedButton.icon(
                                 onPressed: () => askGemini(context),
-                                child: const Text('Generate title'),
+                                label: const Text('Generate title'),
+                                icon: Icon(Icons.smart_toy),
                               ),
                       ),
                       const Spacer(),

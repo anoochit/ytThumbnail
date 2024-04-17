@@ -1,5 +1,5 @@
 name: ythumbnail
-version: 1.3.0+4
+version: 1.5.0+6
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -39,6 +39,6 @@ flutter:
 msix_config:
   display_name: ytThumbnail
   logo_path: assets\yt.png
-  msix_version: 1.3.0.0
+  msix_version: 1.5.0.0
   install_certificate: false
   windows_build_args: --dart-define="ACCESS_TOKEN=XXX"

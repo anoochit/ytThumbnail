@@ -118,16 +118,15 @@ class BaseCanvasView extends GetView<HomeController> {
     );
   }
 
-  Screenshot canvasThumbnail(double scwidth, double scheight,
+  Widget canvasThumbnail(double scwidth, double scheight,
       HomeController controller, BuildContext context) {
-    return Screenshot(
-      controller: screenshotController,
-      child: GestureDetector(
-        onTap: () => pickBaseImage(),
-        child: Container(
-          color: Colors.transparent,
-          width: scwidth,
-          height: scheight,
+    return GestureDetector(
+      onTap: () => pickBaseImage(),
+      child: SizedBox(
+        width: scwidth,
+        height: scheight,
+        child: Screenshot(
+          controller: screenshotController,
           child: Stack(
             children: [
               Image.memory(
@@ -138,7 +137,7 @@ class BaseCanvasView extends GetView<HomeController> {
                 child: AutoSizeText(
                   controller.baseTitle.value,
                   textAlign: controller.textJusify.value,
-                  textScaleFactor: 2.5,
+                  textScaleFactor: 2.0,
                   style: GoogleFonts.kanit(
                     textStyle:
                         Theme.of(context).textTheme.displayLarge!.copyWith(
@@ -146,7 +145,7 @@ class BaseCanvasView extends GetView<HomeController> {
                               height: 1.2,
                             ),
                   ),
-                  maxLines: 4,
+                  maxLines: 5,
                 ),
               )
             ],
