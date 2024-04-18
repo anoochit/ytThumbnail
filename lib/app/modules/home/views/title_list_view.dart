@@ -326,7 +326,7 @@ class TitleListView extends GetView<HomeController> {
                                     .inversePrimary,
                                 child: ElevatedButton.icon(
                                   onPressed: null,
-                                  label: const Text('Generate title'),
+                                  label: const Text('Generating...'),
                                   icon: Icon(Icons.smart_toy),
                                 ),
                               )
