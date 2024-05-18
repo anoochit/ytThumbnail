@@ -1,5 +1,5 @@
 name: ythumbnail
-version: 1.5.0+6
+version: 1.5.1+7
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -14,16 +14,16 @@ dependencies:
   gap: ^3.0.1
   get: 4.6.6
   google_fonts: ^6.1.0
-  google_generative_ai: ^0.2.1
+  google_generative_ai: ^0.4.0
   image: ^4.1.7
   image_picker: ^1.0.7
   palette_generator: ^0.3.3+3
   path_provider: ^2.1.2
-  screenshot: ^2.1.0
+  screenshot: ^3.0.0
   shimmer: ^3.0.0
 
 dev_dependencies:
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
   icons_launcher: ^2.1.7
@@ -39,6 +39,6 @@ flutter:
 msix_config:
   display_name: ytThumbnail
   logo_path: assets\yt.png
-  msix_version: 1.5.0.0
+  msix_version: 1.5.1.0
   install_certificate: false
   windows_build_args: --dart-define="ACCESS_TOKEN=XXX"
